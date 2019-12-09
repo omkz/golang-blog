@@ -29,7 +29,6 @@ func (h *postHandler) Get() {
 
 	for _, each := range posts {
 		fmt.Println(each.Title)
-		fmt.Println(each.Description)
 		fmt.Println(each.Content)
 	}
 }
