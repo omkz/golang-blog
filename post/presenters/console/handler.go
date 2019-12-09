@@ -1,7 +1,8 @@
-package post
+package console
 
 import (
 	"fmt"
+	"github.com/omkz/golang-blog/post"
 )
 
 type PostHandler interface {
@@ -9,10 +10,10 @@ type PostHandler interface {
 }
 
 type postHandler struct {
-	postService PostService
+	postService post.PostService
 }
 
-func NewPostHandler(postService PostService) PostHandler {
+func NewPostHandler(postService post.PostService) PostHandler {
 	return &postHandler{
 		postService,
 	}

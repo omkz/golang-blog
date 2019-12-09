@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/omkz/golang-blog/post"
-	"github.com/omkz/golang-blog/database/mongodb"
+	"github.com/omkz/golang-blog/post/database/mongodb"
+	"github.com/omkz/golang-blog/post/presenters/console"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
@@ -28,6 +29,6 @@ func main() {
 	var postRepo post.PostRepository
 	postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://localhost:27017"))
 	postService := post.NewPostService(postRepo)
-	postHandler := post.NewPostHandler(postService)
+	postHandler := console.NewPostHandler(postService)
 	postHandler.Get()
 }
