@@ -9,12 +9,12 @@ import (
 	"net/http"
 
 	//"github.com/omkz/golang-blog/post/database/postgre"
-	//"github.com/omkz/golang-blog/post/presenters/console"
+	//"github.com/omkz/golang-blog/post/handlers/console"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"github.com/gorilla/mux"
-	"github.com/omkz/golang-blog/post/presenters/json"
+	"github.com/omkz/golang-blog/post/handlers/json"
 )
 
 func postgresConnection(database string) *sql.DB {
