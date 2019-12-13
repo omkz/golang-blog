@@ -2,6 +2,7 @@ package postgre
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/omkz/golang-blog/post"
 	"log"
 
@@ -33,4 +34,30 @@ func (r *postRepository) FindAll() (posts []*post.Post, err error) {
 	}
 
 	return posts, nil
+}
+
+//func (r *postRepository) Create(post *post.Post) error {
+//	_, err := r.db.Exec("INSERT INTO posts(title, content, description, created_at, updated_at) "+
+//		"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+//		post.Title, post.Description, post.Content, post.Created_at, post.Updated_at)
+//
+//	if err != nil {
+//		fmt.Println(err.Error())
+//		return nil
+//	}
+//
+//	return nil
+//}
+
+func (r *postRepository) Create(post *post.Post) error {
+	 _, err := r.db.Exec("INSERT INTO posts(id, title, content, description, created_at, updated_at) "+
+		"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+		post.Id, post.Title, post.Description, post.Content, post.Created_at, post.Updated_at)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+
+	return nil
 }
