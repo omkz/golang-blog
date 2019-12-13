@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"fmt"
 	"github.com/omkz/golang-blog/post"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -50,4 +51,20 @@ func (r *postRepository) FindAll() (posts []*post.Post, err error) {
 	cur.Close(context.TODO())
 
 	return results, nil
+}
+
+func (r *postRepository) Create(post *post.Post) error {
+
+	collection := r.db.Database("blog").Collection("posts")
+
+
+	insertResult, err := collection.InsertOne(context.TODO(), post)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Inserted a single document: ", insertResult.InsertedID)
+
+	return  nil
+
 }

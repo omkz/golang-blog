@@ -9,6 +9,7 @@ import (
 
 type PostHandler interface {
 	Get(w http.ResponseWriter, r *http.Request)
+	Create(w http.ResponseWriter, r *http.Request)
 }
 
 type postHandler struct {
@@ -31,6 +32,20 @@ func (h *postHandler) Get(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+
+}
+
+func (h *postHandler) Create(w http.ResponseWriter, r *http.Request) {
+
+	var post post.Post
+	decoder := json.NewDecoder(r.Body)
+	_ = decoder.Decode(&post)
+	_ = h.postService.CreatePost(&post)
+
+	response, _ := json.Marshal(post)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(response)
 
 }
 
