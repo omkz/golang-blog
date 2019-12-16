@@ -5,15 +5,15 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/omkz/golang-blog/post"
+	"github.com/omkz/golang-blog/post/database/mongodb"
 	"net/http"
-	"github.com/omkz/golang-blog/post/database/postgre"
-	//"github.com/omkz/golang-blog/post/database/mongodb"
+
+	"github.com/gorilla/mux"
+	"github.com/omkz/golang-blog/post/handlers/json"
 	//"github.com/omkz/golang-blog/post/handlers/console"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
-	"github.com/gorilla/mux"
-	"github.com/omkz/golang-blog/post/handlers/json"
 )
 
 func postgresConnection(database string) *sql.DB {
@@ -43,8 +43,8 @@ func mongoConnection(uri string) *mongo.Client {
 
 func main() {
 	var postRepo post.PostRepository
-	//postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://localhost:27017"))
-	postRepo = postgre.NewPostgresPostRepository(postgresConnection("postgresql://omz@localhost/blog_golang?sslmode=disable"))
+	postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://localhost:27017"))
+	//postRepo = postgre.NewPostgresPostRepository(postgresConnection("postgresql://omz@localhost/blog_golang?sslmode=disable"))
 	postService := post.NewPostService(postRepo)
 	//postHandler := console.NewPostHandler(postService)
 	//postHandler.Get()

@@ -57,7 +57,6 @@ func (r *postRepository) Create(post *post.Post) error {
 
 	collection := r.db.Database("blog").Collection("posts")
 
-
 	insertResult, err := collection.InsertOne(context.TODO(), post)
 	if err != nil {
 		log.Fatal(err)
@@ -66,5 +65,4 @@ func (r *postRepository) Create(post *post.Post) error {
 	fmt.Println("Inserted a single document: ", insertResult.InsertedID)
 
 	return  nil
-
 }
