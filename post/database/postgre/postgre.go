@@ -25,7 +25,7 @@ func (r *postRepository) FindAll() (posts []*post.Post, err error) {
 
 	for rows.Next() {
 		post := new(post.Post)
-		if err = rows.Scan(&post.Id, &post.Title, &post.Content); err != nil {
+		if err = rows.Scan(&post.Id, &post.Title, &post.Description, &post.Content, &post.Created_at, &post.Updated_at); err != nil {
 			log.Print(err)
 			return nil, err
 		}
