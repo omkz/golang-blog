@@ -3,6 +3,7 @@ package json
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/omkz/golang-blog/post"
 	"net/http"
 )
@@ -10,6 +11,8 @@ import (
 type PostHandler interface {
 	Get(w http.ResponseWriter, r *http.Request)
 	Create(w http.ResponseWriter, r *http.Request)
+	GetById(w http.ResponseWriter, r *http.Request)
+
 }
 
 type postHandler struct {
@@ -49,5 +52,16 @@ func (h *postHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (h *postHandler) GetById(w http.ResponseWriter, r *http.Request) {
 
+	vars := mux.Vars(r)
+	id := vars["id"]
+	post, _ := h.postService.FindPostById(id)
 
+	response, _ := json.Marshal(post)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(response)
+
+}

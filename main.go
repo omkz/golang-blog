@@ -53,6 +53,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/posts", postHandler.Get).Methods("GET")
 	router.HandleFunc("/posts", postHandler.Create).Methods("POST")
+	router.HandleFunc("/posts/{id}", postHandler.GetById).Methods("GET")
 	fmt.Println("Starting server on the port 8080...")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
