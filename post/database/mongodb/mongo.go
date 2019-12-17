@@ -70,8 +70,12 @@ func (r *postRepository) Create(post *post.Post) error {
 func (r *postRepository) FindById(id string) (*post.Post, error) {
 	post := new(post.Post)
 	filter := bson.D{{"id", id}}
-	documentReturned := r.db.Database("blog").Collection("posts").FindOne(context.TODO(), filter)
-	documentReturned.Decode(&post)
+	err := r.db.Database("blog").Collection("posts").FindOne(context.TODO(), filter).Decode(&post)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return post, nil
 }
 
