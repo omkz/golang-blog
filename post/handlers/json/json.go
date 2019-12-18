@@ -2,7 +2,6 @@ package json
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/omkz/golang-blog/post"
 	"net/http"
@@ -26,7 +25,7 @@ func NewPostHandler(postService post.PostService) PostHandler {
 }
 
 func (h *postHandler) Get(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	payload, _ := h.postService.FindAllPosts()
 	json.NewEncoder(w).Encode(payload)
@@ -59,12 +58,7 @@ func (h *postHandler) GetById(w http.ResponseWriter, r *http.Request) {
 func (h *postHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	err := h.postService.DeletePost(id)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
+	_ = h.postService.DeletePost(id)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
