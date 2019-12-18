@@ -12,7 +12,7 @@ type PostHandler interface {
 	Get(w http.ResponseWriter, r *http.Request)
 	Create(w http.ResponseWriter, r *http.Request)
 	GetById(w http.ResponseWriter, r *http.Request)
-
+	Delete(w http.ResponseWriter, r *http.Request)
 }
 
 type postHandler struct {
@@ -64,4 +64,18 @@ func (h *postHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(response)
 
+}
+
+func (h *postHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	err := h.postService.DeletePost(id)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 }

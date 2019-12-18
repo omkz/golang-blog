@@ -10,6 +10,7 @@ type PostService interface {
 	FindAllPosts() ([]*Post, error)
 	CreatePost(post *Post) error
 	FindPostById(id string) (*Post, error)
+	DeletePost(id string) error
 }
 
 type postService struct {
@@ -35,4 +36,8 @@ func(s *postService) CreatePost(post *Post) error{
 
 func (s *postService) FindPostById(id string) (*Post, error){
 	return s.repo.FindById(id)
+}
+
+func (s *postService) DeletePost(id string) error{
+	return s.repo.Delete(id)
 }

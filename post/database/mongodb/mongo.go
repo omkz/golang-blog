@@ -79,3 +79,16 @@ func (r *postRepository) FindById(id string) (*post.Post, error) {
 	return post, nil
 }
 
+func (r *postRepository) Delete(id string) error {
+
+	filter := bson.D{{"id", id}}
+
+	_, err := r.db.Database("blog").Collection("posts").DeleteOne(context.TODO(), filter)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
