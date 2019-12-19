@@ -12,6 +12,7 @@ type PostHandler interface {
 	Create(w http.ResponseWriter, r *http.Request)
 	GetById(w http.ResponseWriter, r *http.Request)
 	Delete(w http.ResponseWriter, r *http.Request)
+	Update(w http.ResponseWriter, r *http.Request)
 }
 
 type postHandler struct {
@@ -36,6 +37,22 @@ func (h *postHandler) Create(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	_ = decoder.Decode(&post)
 	_ = h.postService.CreatePost(&post)
+
+	response, _ := json.Marshal(post)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(response)
+
+}
+
+func (h *postHandler) Update(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	var post post.Post
+	decoder := json.NewDecoder(r.Body)
+	_ = decoder.Decode(&post)
+	_ = h.postService.UpdatePost(id, &post)
 
 	response, _ := json.Marshal(post)
 	w.Header().Set("Content-Type", "application/json")

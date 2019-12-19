@@ -19,6 +19,7 @@ func NewMongoPostRepository(db *mongo.Client) post.PostRepository {
 	}
 }
 
+
 func (r *postRepository) FindAll() (posts []*post.Post, err error) {
 
 	collection := r.db.Database("blog").Collection("posts")
@@ -53,6 +54,22 @@ func (r *postRepository) FindAll() (posts []*post.Post, err error) {
 	return results, nil
 }
 
+func (r *postRepository) Update(id string, post *post.Post) error {
+
+	filter := bson.D{{"id", id}}
+
+	update := bson.D{{"$set", post}}
+
+	_, err := r.db.Database("blog").Collection("posts").UpdateOne(context.TODO(), filter, update)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
+
 func (r *postRepository) Create(post *post.Post) error {
 
 	collection := r.db.Database("blog").Collection("posts")
@@ -67,18 +84,6 @@ func (r *postRepository) Create(post *post.Post) error {
 	return  nil
 }
 
-func (r *postRepository) FindById(id string) (*post.Post, error) {
-	post := new(post.Post)
-	filter := bson.D{{"id", id}}
-	err := r.db.Database("blog").Collection("posts").FindOne(context.TODO(), filter).Decode(&post)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return post, nil
-}
-
 func (r *postRepository) Delete(id string) error {
 
 	filter := bson.D{{"id", id}}
@@ -91,4 +96,19 @@ func (r *postRepository) Delete(id string) error {
 
 	return nil
 }
+
+
+func (r *postRepository) FindById(id string) (*post.Post, error) {
+	post := new(post.Post)
+	filter := bson.D{{"id", id}}
+	err := r.db.Database("blog").Collection("posts").FindOne(context.TODO(), filter).Decode(&post)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return post, nil
+}
+
+
 

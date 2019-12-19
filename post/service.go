@@ -11,6 +11,7 @@ type PostService interface {
 	CreatePost(post *Post) error
 	FindPostById(id string) (*Post, error)
 	DeletePost(id string) error
+	UpdatePost(id string, post *Post) error
 }
 
 type postService struct {
@@ -41,3 +42,9 @@ func (s *postService) FindPostById(id string) (*Post, error){
 func (s *postService) DeletePost(id string) error{
 	return s.repo.Delete(id)
 }
+
+func (s *postService) UpdatePost(id string, post *Post) error{
+	post.Updated_at = time.Now()
+	return s.repo.Update(id, post)
+}
+

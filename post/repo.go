@@ -5,5 +5,6 @@ type PostRepository interface {
 	Create(post *Post) error
 	FindById(id string) (*Post, error)
 	Delete(id string) error
+	Update(id string, post *Post) error
 }
 
