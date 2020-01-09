@@ -43,7 +43,10 @@ func mongoConnection(uri string) *mongo.Client {
 
 func main() {
 	var postRepo post.PostRepository
-	postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://localhost:27017"))
+	// postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://localhost:27017"))
+	// postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://root:root@localhost:27017"))
+	postRepo = mongodb.NewMongoPostRepository(mongoConnection("mongodb://mongodb:27017"))
+	
 	//postRepo = postgre.NewPostgresPostRepository(postgresConnection("postgresql://omz@localhost/blog_golang?sslmode=disable"))
 	postService := post.NewPostService(postRepo)
 	//postHandler := console.NewPostHandler(postService)
