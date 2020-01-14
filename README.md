@@ -7,16 +7,15 @@
   cd golang-blog
   ```
 
-
 2. Start the development server:
 
   ```bash
   go run main.go
   ```
 
-### Setting up the development environment using Docker (BETA)
+### Setting up the development environment using Docker
 
-- Install `docker` and `docker-compose`
-- `git clone git@github.com:omkz/golang-blog.git`
-- run `docker-compose up`
-- That's it! Navigate to `localhost:8080`
+1. Install `docker` and `docker-compose`
+2.  `git clone git@github.com:omkz/golang-blog.git`
+3. run `docker-compose up`
+4. That's it! Navigate to `localhost:8080`
